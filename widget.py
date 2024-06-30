@@ -17,4 +17,7 @@ def mask_account_card(string: str) -> str:
 print(mask_account_card('Visa Gold 5999414228426353'))
 
 
-def get_data
+def get_data(string: str) -> str:
+    return string[8:10] + '.' + string[5:7] + '.' + string[:4]
+
+print(get_data('2018-07-11T02:26:18.671407'))
