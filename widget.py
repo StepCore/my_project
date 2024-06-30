@@ -1,4 +1,7 @@
-def mask_account_card(string: str) -> str:
+from typing import Any
+
+
+def mask_account_card(string: Any) -> str:
     """Функция, которая возвращает маску карты."""
     card = []
     string = string.split()
@@ -10,7 +13,7 @@ def mask_account_card(string: str) -> str:
         else:
             card.append(i)
     for i in range(0, len(masked_num), 4):
-        card.append(masked_num[i : i + 4])
+        card.append(masked_num[i: i + 4])
     return " ".join(card)
 
 
@@ -18,6 +21,7 @@ print(mask_account_card("Visa Gold 5999414228426353"))
 
 
 def get_data(string: str) -> str:
+    ''''''
     return string[8:10] + "." + string[5:7] + "." + string[:4]
 
 
