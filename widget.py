@@ -21,7 +21,7 @@ print(mask_account_card("Visa Gold 5999414228426353"))
 
 
 def get_data(string: str) -> str:
-    ''''''
+    '''Функция, которая возвращает корректную дату'''
     return string[8:10] + "." + string[5:7] + "." + string[:4]
 
 
