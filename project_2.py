@@ -7,12 +7,6 @@ def get_mask_card_number(num: str) -> str:
     return " ".join(card)
 
 
-print(get_mask_card_number("7000792289606361"))
-
-
-def get_mask_account(num: str) -> str:
+def get_mask_account(account_number: str) -> str:
     """Функция, которая возвращает маску счета."""
-    return "**" + num[-4:]
-
-
-print(get_mask_account("1256412318697421"))
+    return "**" + account_number[-4:]
