@@ -1,10 +1,13 @@
-def get_mask_card_number(num: str) -> str:
+def get_mask_card_number(card_number: str) -> str:
     """Функция, которая возвращает маску карты."""
     card = []
-    num = str(num).replace(str(num)[6:12], "******")
-    for i in range(0, len(num), 4):
-        card.append(num[i: i + 4])
+    card_number = card_number.replace(' ', '')
+    card_number = card_number.replace(card_number[6:12], "******")
+    for i in range(0, len(card_number), 4):
+        card.append(card_number[i: i + 4])
     return " ".join(card)
+
+print(get_mask_card_number('7000 7922 8960 6361'))
 
 
 def get_mask_account(account_number: str) -> str:
