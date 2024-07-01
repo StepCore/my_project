@@ -7,15 +7,16 @@ def mask_card(card_number: str) -> str:
     card_number = card_number.split()
     for i in card_number:
         if i == "Счет":
-            card.append(get_mask_account(card_number[1]))
-            break
+            name.append(i)
+            card.append(card_number[1])
+            return ' '.join(name) + ' ' + get_mask_account(' '.join(card))
         elif i.isalpha():
             name.append(i)
         else:
             card.append(i)
     return ' '.join(name) + ' ' + get_mask_card_number(' '.join(card))
 
-print(mask_card('Master Card 7158 3007 3472 6758'))
+print(mask_card('Visa Gold 5999414228426353'))
 
 
 
