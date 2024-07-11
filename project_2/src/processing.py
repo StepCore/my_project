@@ -1,10 +1,7 @@
-from typing import Any
-
-
 def filter_by_state(
-    list_of_data: Any,
+    list_of_data: str,
     state="EXECUTED",
-) -> Any:
+) -> list[str]:
     '''Функция, которая возвращает список словарей, отсортированный по категории "state"'''
     right_list = []
     for dict in list_of_data:
@@ -13,6 +10,6 @@ def filter_by_state(
     return right_list
 
 
-def sort_by_date(list_of_data: Any, key="date", reverse=True) -> Any:
-    '''Функция, которая возвращает список словарей, отсортированный по дате'''
+def sort_by_date(list_of_data: str, key="date", reverse=True) -> list[str]:
+    """Функция, которая возвращает список словарей, отсортированный по дате"""
     return sorted(list_of_data, key=lambda x: x[key], reverse=reverse)
