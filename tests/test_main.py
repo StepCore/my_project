@@ -1,6 +1,8 @@
 import os
 import sys
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import pytest
 
 from src.masks import get_mask_account, get_mask_card_number
