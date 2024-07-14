@@ -9,8 +9,6 @@ from src.masks import get_mask_account, get_mask_card_number
 from src.processing import filter_by_state, sort_by_date
 from widget import get_data, mask_account_card
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 
 @pytest.mark.parametrize(
     "value, expected",
@@ -56,7 +54,7 @@ def test_get_data(value, expected):
 
 
 @pytest.mark.parametrize(
-    "value, state, expected",
+    "list_input, state, expected",
     [
         (
             [
@@ -135,8 +133,8 @@ def test_get_data(value, expected):
         ([], "", "некоректный формат ввода данных"),
     ],
 )
-def test_filter_by_state(value, state, expected):
-    assert filter_by_state(value, state) == expected
+def test_filter_by_state(list_input, state, expected):
+    assert filter_by_state(list_input, state) == expected
 
 
 @pytest.mark.parametrize(
