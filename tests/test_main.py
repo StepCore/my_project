@@ -1,13 +1,9 @@
-import os
-import sys
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 import pytest
 
-from src.masks import get_mask_account, get_mask_card_number
-from src.processing import filter_by_state, sort_by_date
-from widget import get_data, mask_account_card
+from ..src.masks import get_mask_account, get_mask_card_number
+from ..src.processing import filter_by_state, sort_by_date
+from ..src.widget import get_data, mask_account_card
+
 
 
 @pytest.mark.parametrize(
