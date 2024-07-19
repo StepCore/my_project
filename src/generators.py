@@ -83,10 +83,23 @@ def filter_by_currency(transactions, code):
     for transaction in transactions:
         if transaction['operationAmount']['currency']['code'] == code:
             filtered.append(transaction)
-    return filtered
+    return iter(filtered)
 
 print(*filter_by_currency(transactions,"USD"))
 
-transaction_descriptions = (transaction["description"] for transaction in transactions)
+def transaction_descriptions(transactions):
+    descript = []
+    for transaction in transactions:
+        descript.append(transaction["description"])
+    return descript
 
-print(*transaction_descriptions, sep="\n")
+print(*transaction_descriptions(transactions), sep="\n")
+
+def gen(start_num, end_num):
+    for number in range(start_num, end_num):
+        formated = ' '.join(str(number)[i:i+4] for i in range(0, 16, 4))
+        yield formated
+
+card_number_generator = gen(1789452367891326,9999999999999999)
+
+print(next(card_number_generator))
