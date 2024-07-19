@@ -85,4 +85,8 @@ def filter_by_currency(transactions, code):
             filtered.append(transaction)
     return filtered
 
-print(filter_by_currency(transactions,"USD"))
+print(*filter_by_currency(transactions,"USD"))
+
+transaction_descriptions = (transaction["description"] for transaction in transactions)
+
+print(*transaction_descriptions, sep="\n")
