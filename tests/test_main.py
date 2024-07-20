@@ -3,6 +3,7 @@ import pytest
 from ..src.masks import get_mask_account, get_mask_card_number
 from ..src.processing import filter_by_state, sort_by_date
 from ..src.widget import get_data, mask_account_card
+from ..src.generators import filter_by_currency, transaction_descriptions, gen
 
 
 
@@ -234,3 +235,12 @@ def test_filter_by_state(list_input, state, expected):
 )
 def test_sort_by_date(value, reverse, expected):
     assert sort_by_date(value, reverse=reverse) == expected
+
+def test_transaction_descriptions(transaction):
+    generator = transaction_descriptions(transaction)
+    assert next(generator) == 'Перевод организации'
+    assert next(generator) == 'Перевод со счета на счет'
+    assert next(generator) == 'Перевод со счета на счет'
+    assert next(generator) == 'Перевод с карты на карту'
+    assert next(generator) == 'Перевод организации'
+

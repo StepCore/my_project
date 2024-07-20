@@ -79,23 +79,22 @@ transactions = (
     ]
 )
 def filter_by_currency(transactions, code):
-    filtered = []
+    '''Функция которая выдает операции по указанной валюте'''
     for transaction in transactions:
         if transaction['operationAmount']['currency']['code'] == code:
-            filtered.append(transaction)
-    return iter(filtered)
+            yield transaction
 
 print(*filter_by_currency(transactions,"USD"))
 
 def transaction_descriptions(transactions):
-    descript = []
+    '''Функция которая выдает описание операций по очереди'''
     for transaction in transactions:
-        descript.append(transaction["description"])
-    return descript
+        yield transaction["description"]
 
 print(*transaction_descriptions(transactions), sep="\n")
 
 def gen(start_num, end_num):
+    '''Генератор номеров банковских карт'''
     for number in range(start_num, end_num):
         formated = ' '.join(str(number)[i:i+4] for i in range(0, 16, 4))
         yield formated
