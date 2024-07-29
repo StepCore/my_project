@@ -296,11 +296,23 @@ def test_log(capsys):
 def test_error_log(capsys):
     @log()
     def error_function(x, y):
-        raise ValueError("Something went wrong!")
+        raise Exception("ошибка")
 
-    with pytest.raises(ValueError):  # Ожидаем, что будет выброшено исключение
+    with pytest.raises(Exception):
         error_function(1, 2)
 
     captured = capsys.readouterr()
-    assert "Start error_function" in captured.out
-    assert "End error_function" in captured.out
+    assert "" == captured.out
+
+
+def test_log_to_file(tmp_path):
+    log_file = tmp_path / "test_log.txt"
+
+    @log(filename=log_file)
+    def func():
+        return "output"
+
+    func()
+    with open(log_file, "r") as file:
+        log_content = file.read()
+    assert log_content == "func ok\n"
