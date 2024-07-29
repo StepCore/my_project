@@ -1,5 +1,6 @@
 import pytest
 
+from ..src.decorators import log
 from ..src.generators import filter_by_currency, gen, transaction_descriptions
 from ..src.masks import get_mask_account, get_mask_card_number
 from ..src.processing import filter_by_state, sort_by_date
@@ -280,3 +281,26 @@ def test_gen(start_num, end_num):
     assert next(generator) == "1000 0000 0000 0003"
     assert next(generator) == "1000 0000 0000 0004"
     assert next(generator) == "1000 0000 0000 0005"
+
+
+def test_log(capsys):
+    @log()
+    def func():
+        return "output"
+
+    func()
+    captured = capsys.readouterr()
+    assert captured.out == "func ok\n"
+
+
+def test_error_log(capsys):
+    @log()
+    def error_function(x, y):
+        raise ValueError("Something went wrong!")
+
+    with pytest.raises(ValueError):  # Ожидаем, что будет выброшено исключение
+        error_function(1, 2)
+
+    captured = capsys.readouterr()
+    assert "Start error_function" in captured.out
+    assert "End error_function" in captured.out
