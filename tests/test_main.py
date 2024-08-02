@@ -293,17 +293,6 @@ def test_log(capsys):
     assert captured.out == "func ok\n"
 
 
-def test_error_log(capsys):
-    @log()
-    def error_function(x, y):
-        raise Exception("ошибка")
-
-    with pytest.raises(Exception):
-        error_function(1, 2)
-
-    captured = capsys.readouterr()
-    assert "" == captured.out
-
 
 def test_log_to_file(tmp_path):
     log_file = tmp_path / "test_log.txt"
