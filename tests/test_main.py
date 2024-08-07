@@ -293,7 +293,6 @@ def test_log(capsys):
     assert captured.out == "func ok\n"
 
 
-
 def test_log_to_file(tmp_path):
     log_file = tmp_path / "test_log.txt"
 
