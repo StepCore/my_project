@@ -46,4 +46,4 @@ def converter_value():
 
 
 return_sum_transaction()
-print(converter_value())
+converter_value()
