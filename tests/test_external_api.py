@@ -1,29 +1,25 @@
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
-from ..src.external_api import convert_to_rub
-
-
-def test_convert_to_rub():
-    mock_converter = Mock(return_value="9824.07")
-    convert_to_rub = mock_converter
-    assert convert_to_rub == "9824.07"
-    mock_converter.assert_called_once_with()
+from src.external_api import convert_to_rub
 
 
-@patch("src.utils.get_exchange_rate")
-def test_converter_value(mock_get_exchange_rate):
-    mock_get_exchange_rate.return_value = (True, 5684.78)
-    usd_transaction = {
-        "id": 41428829,
-        "state": "EXECUTED",
-        "date": "2019-07-03T18:35:29.512364",
-        "operationAmount": {
-            "amount": "5684.78",
-            "currency": {"name": "руб", "code": "RUB"},
-        },
-        "description": "Перевод организации",
-        "from": "MasterCard 7158300734726758",
-        "to": "Счет 35383033474447895560",
-    }
-    result = convert_to_rub(usd_transaction)
-    assert result == 5684.78
+@patch("src.external_api.requests.get")
+def test_convert_to_rub(mock):
+    mock.return_value.json.return_value = {"result": 31957.58}
+
+    result = convert_to_rub(
+        {
+            "id": 441945886,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {
+                "amount": "31957.58",
+                "currency": {"name": "руб.", "code": "USD"},
+            },
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589",
+        }
+    )
+
+    assert result == 31957.58

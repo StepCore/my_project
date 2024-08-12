@@ -21,5 +21,5 @@ def convert_to_rub(transaction: dict) -> float:
             f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={currency}&amount={amount}",
             headers=HEADERS,
         )
-        data = response.json()
+        data = dict(response.json())
         return float(data["result"])
