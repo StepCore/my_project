@@ -1,5 +1,6 @@
 import pytest
 
+from ..src.decorators import log
 from ..src.generators import filter_by_currency, gen, transaction_descriptions
 from ..src.masks import get_mask_account, get_mask_card_number
 from ..src.processing import filter_by_state, sort_by_date
@@ -280,3 +281,26 @@ def test_gen(start_num, end_num):
     assert next(generator) == "1000 0000 0000 0003"
     assert next(generator) == "1000 0000 0000 0004"
     assert next(generator) == "1000 0000 0000 0005"
+
+
+def test_log(capsys):
+    @log()
+    def func():
+        return "output"
+
+    func()
+    captured = capsys.readouterr()
+    assert captured.out == "func ok\n"
+
+
+def test_log_to_file(tmp_path):
+    log_file = tmp_path / "test_log.txt"
+
+    @log(filename=log_file)
+    def func():
+        return "output"
+
+    func()
+    with open(log_file, "r") as file:
+        log_content = file.read()
+    assert log_content == "func ok\n"
