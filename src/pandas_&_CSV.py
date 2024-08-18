@@ -1,5 +1,6 @@
-import pandas as pd
 import csv
+
+import pandas as pd
 
 
 def csv_reader(read_file):
@@ -17,4 +18,4 @@ def excel_reader(read_file):
     print(dict(reader))
 
 
-print(excel_reader('../transactions_excel.xlsx'))
+# print(excel_reader('../transactions_excel.xlsx'))
