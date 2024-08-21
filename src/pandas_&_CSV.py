@@ -5,11 +5,11 @@ import pandas as pd
 
 def csv_reader(read_file):
     transaction = []
-    with open(read_file, encoding="utf-8") as file:
-        reader = csv.DictReader(file)
+    with open(read_file, mode='r', encoding="utf-8") as file:
+        reader = csv.DictReader(file, delimiter=';')
         for row in reader:
             transaction.append(row)
-        return transaction
+    return transaction
 
 
 # print(csv_reader('../transactions.csv'))
