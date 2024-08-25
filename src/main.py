@@ -1,94 +1,65 @@
 from src.utils import json_data
-from src.filter_transactions import filter_transaction, filter_by_description
+from src.filter_transactions import filter_transaction
 from src.pandas_and_CSV import csv_reader, excel_reader
+from src.processing import sort_by_date
+import random
 
 
 def main():
     """Основная логика программы, связывание модулей и фильтрация транзакций"""
     print(
-        "Привет! Добро пожаловать в программу работы с банковскими транзакциями.\nВыберите необходимый пункт"
-        "меню:\n1. Получить информацию о транзакциях из JSON-файла.\n2. Получить информацию о"
+        "Привет! Добро пожаловать в программу работы с банковскими транзакциями.\nВыберите необходимый пункт "
+        "меню:(число от 1 до 3)\n1. Получить информацию о транзакциях из JSON-файла.\n2. Получить информацию о"
         "транзакциях из CSV-файла.\n3. Получить информацию о транзакциях из XLSX-файла"
     )
-    while True:
-        try:
-            user_choice = int(input())
-            if user_choice == 1:
-                print('Для обработки выбран JSON-файл.')
-                json_list_transaction = json_data()
-                user_choice = json_list_transaction
-                return json_list_transaction
-            elif user_choice == 2:
-                print('Для обработки выбран CSV-файл.')
-                csv_list_transaction = csv_reader()
-                user_choice = csv_list_transaction
-                return user_choice
-            elif user_choice == 3:
-                print('Для обработки выбран XLSX-файл.')
-                excel_list_transaction = excel_reader()
-                user_choice = excel_list_transaction
-            else:
-                print('Пожалуйста, введите число от 1 до 3')
-                continue
-        except ValueError:
-            print('Пожалуйста, введите число от 1 до 3')
-        else:
-            break
+    file_list = [json_data(), csv_reader(), excel_reader()]
+    try:
+        user_input = int(input())
+        if user_input == 1:
+            print('Для обработки выбран JSON-файл.')
+            user_choice = json_data()
+        elif user_input == 2:
+            print('Для обработки выбран CSV-файл.')
+            user_choice = csv_reader()
+        elif user_input == 3:
+            print('Для обработки выбран XLSX-файл.')
+            user_choice = excel_reader()
+    except ValueError:
+        user_choice = random.randint(1, 3)
+        print(f'Выбран случайный файл: {user_choice}')
+        user_choice = file_list[user_choice-1]
 
-    while True:
-        user_input = input('Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING\n')
-        if user_input.lower() == 'executed':
-            print('Операции отфильтрованы по статусу "EXECUTED"')
-            filtered_by_executed = filter_transaction('EXECUTED')
-        elif user_input.lower() == 'canceled':
-            print('Операции отфильтрованы по статусу "CANCELED"')
-            filtered_by_canceled = filter_transaction('CANCELED')
-        elif user_input.lower() == 'pending':
-            print('Операции отфильтрованы по статусу "PENDING"')
-            filtered_by_pending = filter_transaction('PENDING')
-        else:
-            print(f'Статус операции "{user_input}" недоступен.')
-            continue
+    user_input = input('Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING\n')
+    if user_input.lower() == 'executed':
+        print('Операции отфильтрованы по статусу "EXECUTED"')
+        user_choice = filter_transaction(user_choice, 'EXECUTED')
+    elif user_input.lower() == 'canceled':
+        print('Операции отфильтрованы по статусу "CANCELED"')
+        user_choice = filter_transaction(user_choice, 'CANCELED')
+    elif user_input.lower() == 'pending':
+        print('Операции отфильтрованы по статусу "PENDING"')
+        user_choice = filter_transaction(user_choice, 'PENDING')
+    else:
+        print(f'Статус операции "{user_input}" недоступен.')
 
-    while True:
-        user_input = input('Отсортировать операции по дате? Да/Нет\n')
-        if user_input.lower() == 'да':
-            break
-        elif user_input.lower() == 'нет':
-            break
-        else:
-            print('Пожалуйста, введите "да" или "нет"')
-            continue
-
-    while True:
+    user_input = input('Отсортировать операции по дате? Да/Нет\n')
+    if user_input.lower() == 'да':
+        user_choice = sort_by_date(user_choice)
         user_input = input('Отсортировать по возрастанию или по убыванию?\n')
         if user_input.lower() == 'по возрастанию':
-            break
-        elif user_input.lower() == 'по убыванию':
-            break
-        else:
-            print('Пожалуйста, введите "по возрастанию" или "по убыванию"')
-            continue
+            user_choice = sort_by_date(user_choice, reverse=False)
 
-    while True:
-        user_input = input('Выводить только рублевые тразакции? Да/Нет\n')
-        if user_input.lower() == 'да':
-            break
-        elif user_input.lower() == 'нет':
-            break
-        else:
-            print('Пожалуйста, введите "да" или "нет"')
-            continue
+    user_input = input('Выводить только рублевые тразакции? Да/Нет\n')
+    if user_input.lower() == 'да':
+        user_choice = filter_transaction(user_choice, 'RUB')
 
-    while True:
-        user_input = input('Отфильтровать список транзакций по определенному слову в описании? Да/Нет\n')
-        if user_input.lower() == 'да':
-            break
-        elif user_input.lower() == 'нет':
-            break
-        else:
-            print('Пожалуйста, введите "да" или "нет"')
-            continue
+    user_input = input('Отфильтровать список транзакций по определенному слову в описании? Да/Нет\n')
+    if user_input.lower() == 'да':
+        user_input = input('Введите слово для фильтрации.\n')
+        user_choice = filter_transaction(user_choice, user_input)
+        return user_choice
+    else:
+        return user_choice
 
 
-print(main())
+print(*main(), sep='\n')

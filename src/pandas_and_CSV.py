@@ -10,7 +10,7 @@ def csv_reader():
         return list(reader)
 
 
-# print(csv_reader('../transactions.csv'))
+# print(csv_reader())
 
 
 def excel_reader():
@@ -19,4 +19,4 @@ def excel_reader():
     return reader.to_dict(orient="records")
 
 
-# print(excel_reader('../transactions_excel.xlsx'))
+# print(excel_reader())

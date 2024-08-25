@@ -4,30 +4,37 @@ from src.pandas_and_CSV import csv_reader, excel_reader
 from src.utils import json_data
 
 
-def filter_transaction(string="id"):
+def filter_transaction(open_file, string="state"):
     """Функция, которая возвращает отфильтрованный по найденной строке список транзакций"""
-    filtered_list = []
-    pattern = re.compile(string, flags=re.IGNORECASE)
-    list_transaction = json_data()
-    for item in list_transaction:
-        matches = pattern.findall(str(item))
-        for match in matches:
-            filtered_list.append(item)
-    return filtered_list
+    transactions = []
+    if open_file == csv_reader() or excel_reader():
+        pattern = re.compile(string, flags=re.IGNORECASE)
+        list_transaction = open_file
+        for item in list_transaction:
+            matches = pattern.findall(str(item))
+            for match in matches:
+                transactions.append(item)
+        return transactions
+    else:
+        for transaction in json_data():
+            if transaction.get('state') == transaction.get(string):
+                transactions.append(transaction)
+        print(len(transactions))
+        return transactions
 
 
-# print(*filter_transaction('pending'), sep='\n')
+# print(*filter_transaction(json_data(), 'RUB'), sep='\n')
 
 
-def filter_json(string):
+def filter_json(string='state'):
     transactions = []
     for transaction in json_data():
-        if transaction.get('state') == string.upper():
+        if transaction.get('state') == transaction.get(string):
             transactions.append(transaction)
     return transactions
 
 
-# print(*filter_json('canceled'), sep='\n')
+# print(*filter_json(), sep='\n')
 
 
 def filter_by_description(descriptions):
