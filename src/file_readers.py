@@ -5,7 +5,7 @@ import pandas as pd
 
 def csv_reader():
     """Функция, читающая CSV файл"""
-    with open('../transactions.csv', mode="r", encoding="utf-8") as file:
+    with open("../transactions.csv", mode="r", encoding="utf-8") as file:
         reader = csv.DictReader(file, delimiter=";")
         return list(reader)
 
