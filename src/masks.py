@@ -31,7 +31,3 @@ def get_mask_account(account_number: str) -> str:
         return "**" + account_number[-4:]
     logger.error("некорректный формат данных")
     return "некорректный формат ввода данных"
-
-
-get_mask_account("7894564651565484654")
-get_mask_card_number("7894 5612 7564 7894")
